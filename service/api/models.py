@@ -38,5 +38,5 @@ class Question(models.Model):
 class Answer(models.Model):
     """Модель для пользовательских ответов на вопросы"""
     uid = models.IntegerField() # уникальный идентификатор пользователя
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.OneToOneField(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=250)
