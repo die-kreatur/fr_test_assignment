@@ -16,7 +16,7 @@ class Quiz(models.Model):
         return f"Quiz {self.name}"
 
     def is_active(self):
-        return self.end <= timezone.now()
+        return str(self.end) >= str(timezone.now().date())
 
 
 class Question(models.Model):
@@ -37,6 +37,7 @@ class Question(models.Model):
 
 class Answer(models.Model):
     """Модель для пользовательских ответов на вопросы"""
-    uid = models.IntegerField() # уникальный идентификатор пользователя
+    uid = models.IntegerField(unique=True) # уникальный идентификатор пользователя
     question = models.OneToOneField(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=250)
+    time_answered = models.DateField(default=timezone.now, editable=False)
