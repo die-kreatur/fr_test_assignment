@@ -1,5 +1,6 @@
+from django.db.models import fields
 from rest_framework import serializers
-from .models import Quiz
+from .models import Quiz, Answer, Question
 
 
 class QuizSerializer(serializers.ModelSerializer):
@@ -7,3 +8,15 @@ class QuizSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quiz
         fields = ['name', 'start', 'end']
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = ['quiz', 'question', 'type']
+
+
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ['quiz', 'question', 'answer']

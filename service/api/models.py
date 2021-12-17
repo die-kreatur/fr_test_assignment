@@ -15,9 +15,6 @@ class Quiz(models.Model):
     def __str__(self):
         return f"Quiz {self.name}"
 
-    def is_active(self):
-        return str(self.end) >= str(timezone.now().date())
-
 
 class Question(models.Model):
     """Модель для отдельного вопроса в опросе"""
@@ -37,7 +34,16 @@ class Question(models.Model):
 
 class Answer(models.Model):
     """Модель для пользовательских ответов на вопросы"""
-    uid = models.IntegerField(unique=True) # уникальный идентификатор пользователя
-    question = models.OneToOneField(Question, on_delete=models.CASCADE)
+    uid = models.IntegerField() # уникальный идентификатор пользователя
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=250)
     time_answered = models.DateField(default=timezone.now, editable=False)
+    
+    class Meta:
+        """Пользователь может отвечать только один раз на каждый вопрос"""
+        unique_together = ['uid', 'question']
+
+    def __str__(self):
+        return f"Answer on {self.question} from {self.quiz}"
+        
