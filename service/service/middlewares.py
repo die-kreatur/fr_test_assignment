@@ -8,9 +8,14 @@ class AnonIdSessionMiddlware:
 
     def __call__(self, request):
         if not request.user.is_authenticated and \
-            'anonymous_user_id' not in request.session:
-            uid = str(uuid.uuid4().int)
-            request.session['anonymous_user_id'] = uid
+            'user_id' not in request.session:
+            uid = str(uuid.uuid4().int)[:6]
+            request.session['user_id'] = uid
+
+        elif request.user.is_authenticated and \
+            'user_id' not in request.session:
+            uid = request.user.id
+            request.session['user_id'] = uid
 
         response = self.get_response(request)
 
