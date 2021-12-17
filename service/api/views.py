@@ -25,7 +25,7 @@ class PostAnswers(APIView):
         except Question.DoesNotExist:
             return Response(
                 {'Error': f'Question number {pk} does not exist'},
-                status=status.HTTP_405_METHOD_NOT_ALLOWED
+                status=status.HTTP_404_NOT_FOUND
                 )
 
 
@@ -52,7 +52,7 @@ class PostAnswers(APIView):
             """Обработка ошибки, в случае если пользователь попытается ответить на вопрос снова"""
             return Response(
                 {'Error': 'You have already answered this question'},
-                status=status.HTTP_405_NOT_FOUND
+                status=status.HTTP_405_METHOD_NOT_ALLOWED
                 )
 
 
