@@ -55,8 +55,6 @@ class PostAnswers(APIView):
                 status=status.HTTP_405_NOT_FOUND
                 )
 
-# {"answer": "Rome"}
-
 
 class GetAnswers(generics.ListAPIView):
     """Получение своих детализированныйх ответов пользователем на вопросы"""
